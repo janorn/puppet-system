@@ -137,4 +137,9 @@ class system (
     config => $config['providers'],
     stage  => first
   }
+
+  class { '::system::resources':
+    config => $config['resources'],
+    stage  => third
+  }
 }
