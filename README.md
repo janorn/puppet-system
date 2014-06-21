@@ -13,7 +13,6 @@ Manage Linux system resources and services from hiera configuration.
 * *mail* manage entries in /etc/aliases or set a relay host
 * *mounts*: manage entries in /etc/fstab
 * *network*: configure basic networking and dns
-* *ntp*: configure NTP servers in /etc/ntp.conf
 * *packages*: manage system packages
 * *schedules*: determine when resource config should not be applied and how often
 * *services*: manage system services
@@ -309,24 +308,6 @@ Example configuration:
         routes:
           '10.0.0.0/8':
             via: '10.16.0.250'
-
-## ntp
-
-Manage NTP servers in /etc/ntp.conf
-
-Example 1:
-
-    system::ntp::iburst:  'true'
-    system::ntp::servers: [ 'ntp1.example.com' ]
-
-Example 2:
-
-    system::ntp::iburst:  'true'
-    system::ntp::country: 'uk'
-
-See https://github.com/erwbgy/puppet-ntp for more details
-
-Note: The NTP algorithm does not work properly with two NTP servers.
 
 ## packages
 
