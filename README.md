@@ -16,7 +16,6 @@ Manage Linux system resources and services from hiera configuration.
 * *packages*: manage system packages
 * *schedules*: determine when resource config should not be applied and how often
 * *services*: manage system services
-* *sshd*: manage configuration in /etc/ssh/sshd_config including subsystems like sftp
 * *sysconfig*: manage files under /etc/sysconfig: clock, i18n, keyboard, puppet-dashboard, puppet, puppetmaster, selinux
 * *sysctl*: manage entries in /etc/sysctl.conf
 * *templates*: create files from ERB templates
@@ -30,7 +29,7 @@ For default types (users, groups, mounts, yumrepos, packages, cron, exec) see
 the documentation at http://docs.puppetlabs.com/references/latest/type.html for
 the parameters that can be passed to each of the resources.
 
-For augeasproviders types (sysctl, sshd) see
+For augeasproviders types (sysctl) see
 http://forge.puppetlabs.com/domcleal/augeasproviders.
 
 For limits see http://forge.puppetlabs.com/erwbgy/limits.
@@ -419,34 +418,6 @@ Note:
 
 * Do not specify any services that are managed by other Puppet modules (eg.
   ntpd or network) otherwise you may get conflicts
-
-## sshd
-
-Manage settings in /etc/ssh/sshd.conf
-
-Synchronize host keys file entries across all puppet-managed hosts.
-
-Example configuration:
-
-    system::sshd:
-      AllowGroups:
-        value:     [ 'sshusers', 'admin' ]
-      PermitRootLogin:
-        value:     'without-password'
-        condition: 'Host example.net'
-
-    system::sshd::subsystem:
-      sftp:
-        command: '/usr/libexec/openssh/sftp-server -u 0002'
-
-    system::sshd::sync_host_keys: 'true'
-
-No defaults.
-
-See:
-
-* https://github.com/domcleal/augeasproviders/blob/master/lib/puppet/type/sshd_config.rb
-* https://github.com/domcleal/augeasproviders/blob/master/lib/puppet/type/sshd_config_subsystem.rb
 
 ## sysconfig
 
