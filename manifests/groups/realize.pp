@@ -1,6 +1,5 @@
 class system::groups::realize (
   $groups   = undef,
-  $schedule = $::system::schedule,
 ) {
   if $groups {
     realize(Group[$groups])

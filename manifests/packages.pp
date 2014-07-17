@@ -1,10 +1,8 @@
 class system::packages (
   $config   = undef,
-  $schedule = $::system::schedule,
 ) {
   $defaults = {
     ensure   => 'installed',
-    schedule => $schedule,
   }
   if $config {
     create_resources(package, $config, $defaults)

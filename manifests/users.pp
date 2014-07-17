@@ -1,11 +1,9 @@
 class system::users (
   $config   = undef,
-  $schedule = $::system::schedule,
   $real     = false,
 ) {
   $defaults = {
     ensure   => 'present',
-    schedule => $schedule,
     shell    => '/bin/bash'
   }
   if $real {

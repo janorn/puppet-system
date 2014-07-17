@@ -42,18 +42,6 @@ Include the system module in your puppet configuration:
 
 and add required hiera configuration.
 
-Note: To exclude certain system classes when doing 'include system' you can set
-their schedule parameter to 'never'.  This may be useful when testing or
-debugging issues or just to prevent config lower in the hierarchy being
-applied.
-
-For example:
-
-    system::packages::schedule:  'never'
-    system::yumgroups::schedule: 'never'
-
-will ignore any configuration for system::packages and system::yumgroups.
-
 ## augeas
 
 Apply changes to files using the augeas tool.  This enables simple

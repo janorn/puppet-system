@@ -1,11 +1,9 @@
 class system::groups (
   $config   = undef,
-  $schedule = $::system::schedule,
   $real     = false,
 ) {
   $defaults = {
     ensure   => 'present',
-    schedule => $schedule,
   }
   if $real {
     $type = 'group'

@@ -1,6 +1,5 @@
 class system::users::realize (
   $users    = undef,
-  $schedule = $::system::schedule,
 ) {
   if $users {
     realize(User[$users])

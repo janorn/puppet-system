@@ -1,10 +1,8 @@
 class system::files (
   $config   = undef,
-  $schedule = $::system::schedule,
 ) {
   $defaults = {
     ensure   => 'present',
-    schedule => $schedule,
   }
   if $config {
     create_resources(file, $config, $defaults)

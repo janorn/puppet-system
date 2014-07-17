@@ -1,10 +1,8 @@
 class system::crontabs (
   $config   = undef,
-  $schedule = $::system::schedule,
 ) {
   $defaults = {
     ensure   => 'present',
-    schedule => $schedule,
     user     => 'root',
   }
   if $config {

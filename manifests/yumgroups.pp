@@ -1,10 +1,8 @@
 class system::yumgroups (
   $config   = undef,
-  $schedule = $::system::schedule,
 ) {
   $defaults = {
     ensure   => 'present',
-    schedule => $schedule,
   }
   if $config {
     create_resources('system::yumgroup', $config, $defaults)

@@ -1,6 +1,6 @@
+#
 define system::fact (
   $value    = undef,
-  $schedule = $::system::schedule,
   $type     = 'yaml',
   $ttl      = undef,
 ) {
@@ -10,7 +10,6 @@ define system::fact (
   if is_array($value) {
     $resource_name = "${var}%index%"
     $parameters = {
-      schedule => $schedule,
       type     => $type,
       ttl      => $ttl,
     }

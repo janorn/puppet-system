@@ -1,6 +1,5 @@
 class system (
   $config   = {},
-  $schedule = undef,
 ) {
   # Ensure that files and directories are created before
   # other resources (like mounts) that may depend on them

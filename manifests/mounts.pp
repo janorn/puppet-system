@@ -1,11 +1,9 @@
 class system::mounts (
   $config   = undef,
-  $schedule = $::system::schedule,
 ) {
   $defaults = {
     atboot   => true,
     ensure   => 'mounted',
-    schedule => $schedule,
   }
   if $config {
     create_resources(mount, $config, $defaults)

@@ -1,10 +1,6 @@
 class system::mail (
   $config   = undef,
-  $schedule = $::system::schedule,
 ) {
-  $defaults = {
-    schedule => $schedule,
-  }
   if $config {
     $aliases   = $config['aliases']
     $relayhost = $config['relayhost']
@@ -19,7 +15,7 @@ class system::mail (
     }
   }
   if $aliases {
-    create_resources(mailalias, $aliases, $defaults)
+    create_resources(mailalias, $aliases)
   }
   if $relayhost {
     case $type {
@@ -28,12 +24,10 @@ class system::mail (
           context  => '/files/etc/postfix/main.cf',
           changes  => [ "set relayhost ${relayhost}" ],
           notify   => Service['postfix'],
-          schedule => $schedule,
         }
         service { 'postfix':
           ensure   => 'running',
           enable   => true,
-          schedule => $schedule,
         }
       }
       default: {

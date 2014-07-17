@@ -1,7 +1,7 @@
+#
 class system::facts (
   $config   = undef,
   $cleanold = false,
-  $schedule = $::system::schedule,
 ) {
   if ! defined(File['/etc/facter']) {
     file { '/etc/facter':
@@ -32,16 +32,13 @@ class system::facts (
     content  => "---\n",
     order    => '01',
   }
-  $defaults = {
-    schedule => $schedule,
-  }
   if $config {
-    create_resources('system::fact', $config, $defaults)
+    create_resources('system::fact', $config)
   }
   else {
     $hiera_config = hiera_hash('system::facts', undef)
     if $hiera_config {
-      create_resources('system::fact', $hiera_config, $defaults)
+      create_resources('system::fact', $hiera_config)
     }
   }
 
@@ -52,10 +49,9 @@ class system::facts (
     file { [ $sh_filename, $csh_filename ]:
       ensure => absent,
     }
-    exec { "fact-remove-sysconfig-puppet":
+    exec { 'fact-remove-sysconfig-puppet':
       command  => "/usr/bin/perl -pi -e 's/^\s*#?\s*(export )?FACTER_.*?=.*?$//' /etc/sysconfig/puppet",
       onlyif   => '/bin/grep -q FACTER_ /etc/sysconfig/puppet',
-      schedule => $schedule,
     }
   }
 }
