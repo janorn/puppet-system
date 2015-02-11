@@ -1,4 +1,5 @@
 define system::network::interface (
+  $ensure                = present,
   $dhcp                  = undef,
   $hwaddr                = undef,
   $hotplug               = true,
@@ -60,7 +61,7 @@ define system::network::interface (
   $_ipv6autoconf = $ipv6autoconf
   validate_bool($_ipv6autoconf)
   file { "/etc/sysconfig/network-scripts/ifcfg-${_interface}":
-    ensure  => present,
+    ensure  => $ensure,
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
@@ -70,6 +71,7 @@ define system::network::interface (
   if $routes {
     validate_hash($routes)
     concat { "/etc/sysconfig/network-scripts/route-${_interface}":
+      ensure => $ensure,
       owner  => 'root',
       group  => 'root',
       mode   => '0644',
