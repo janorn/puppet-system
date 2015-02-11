@@ -7,7 +7,7 @@ define system::network::interface (
   $ipv6addr              = undef,
   $ipv6addr_secondaries  = undef,
   $ipv6autoconf          = true,
-  $netmask               = undef,
+  $netmask               = ip_netmask($ipaddress),
   $onboot                = true,
   $routes                = undef,
   $type                  = 'Ethernet',
@@ -35,7 +35,7 @@ define system::network::interface (
   }
   $_hotplug = $hotplug
   validate_bool($_hotplug)
-  $_ipaddr  = $ipaddress
+  $_ipaddr  = ip_address($ipaddress)
   if ! is_ip_address($_ipaddr) and ! $_dhcp {
     fail('system::network::interface::ipaddress must be an IP address')
   }
