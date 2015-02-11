@@ -27,7 +27,7 @@ define system::network::interface (
   validate_bool($_dhcp)
   if $hwaddr {
     if ! is_mac_address($hwaddr) {
-      fail("system::network::interface::hwaddr '$hwaddr' must be a MAC address: interface '${_interface}'")
+      fail("system::network::interface::hwaddr '${hwaddr}' must be a MAC address: interface '${_interface}'")
     }
     $_hwaddr = $hwaddr
   }
