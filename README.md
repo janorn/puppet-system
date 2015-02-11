@@ -183,7 +183,7 @@ Example configuration:
         gid:    '1503'
     system::groups::realize:
       - 'keith'
- 
+
 Defaults:
 
 * ensure: present
@@ -276,12 +276,11 @@ point directories have a chance to be created first.
 
 ## network
 
-Configure basic networking: set hostname, enable/disable zeroconf/IPv6, set the default route,
+Configure basic networking: enable/disable zeroconf/IPv6, set the default route,
 configure interfaces and their static routes, configure nameserver resolvers and domains
 
 Example configuration:
 
-    system::network::hostname: 'puppet.domain.com'
     system::network::gateway:  '10.7.0.1'
     system::network::ipv6:     'false'
     system::network::zeroconf: 'false'

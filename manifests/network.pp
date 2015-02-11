@@ -1,5 +1,4 @@
 class system::network (
-  $hostname     = undef,
   $gateway      = undef,
   $ipv6         = false,
   $ipv6init     = false,
