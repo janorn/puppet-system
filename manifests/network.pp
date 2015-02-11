@@ -1,3 +1,6 @@
+#
+# system::network class
+#
 class system::network (
   $gateway      = undef,
   $ipv6         = false,
@@ -5,22 +8,23 @@ class system::network (
   $ipv6autoconf = true,
   $zeroconf     = false,
 ) {
-  if $hostname {
-    validate_string($hostname)
-    if ! is_ip_address($gateway) {
-      fail('system::network::gateway must be an IP address')
-    }
-    validate_bool($ipv6)
-    validate_bool($zeroconf)
-    file { '/etc/sysconfig/network':
-      ensure  => present,
-      owner   => 'root',
-      group   => 'root',
-      mode    => '0644',
-      content => template('system/network/network.erb'),
-    }
-    include system::network::dns
-    include system::network::interfaces
-    include system::network::service
+  if ! is_ip_address($gateway) {
+    fail('system::network::gateway must be an IP address')
   }
+  validate_bool($ipv6)
+  validate_bool($zeroconf)
+  case $::osfamily {
+    'RedHat': {
+      include system::network::redhat
+    }
+    'Solaris': {
+      include system::network::solaris
+    }
+    default: {
+      fail('This network module only supports RedHat & Solaris based systems.')
+    }
+  }
+  include system::network::dns
+  include system::network::interfaces
+  include system::network::service
 }
