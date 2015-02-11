@@ -1,4 +1,7 @@
-define system::network::interface (
+#
+# Redhat interface config
+#
+define system::network::rhel_interface (
   $ensure                = present,
   $dhcp                  = undef,
   $hwaddr                = undef,
