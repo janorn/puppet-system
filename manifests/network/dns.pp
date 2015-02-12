@@ -1,4 +1,7 @@
+#system::network::dns:
 #  domainname:  'domain.com'
+#  nameservers: [ '10.7.96.2'  ]
+#  domains:     [ 'domain.com' ]
 class system::network::dns (
   $config = undef,
 ) {
@@ -25,6 +28,3 @@ class system::network::dns (
     }
   }
 }
-#system::network::dns:
-#  nameservers: [ '10.7.96.2'  ]
-#  domains:     [ 'domain.com' ]
