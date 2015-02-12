@@ -19,12 +19,24 @@ class system::network::dns (
     validate_string($domain)
     validate_array($domains)
     validate_array($nameservers)
-    file { '/etc/resolv.conf':
-      ensure  => 'present',
-      owner   => 'root',
-      group   => 'root',
-      mode    => '0644',
-      content => template('system/network/dns.erb'),
+    case $::osfamily {
+      'RedHat': {
+        file { '/etc/resolv.conf':
+          ensure  => 'present',
+          owner   => 'root',
+          group   => 'root',
+          mode    => '0644',
+          content => template('system/network/dns.erb'),
+        }
+      }
+      'Solaris': {
+        dns { 'current':
+          domain     => $domain,
+          nameserver => $nameservers,
+          search     => $domains,
+        }
+      }
+      default: { }
     }
   }
 }
