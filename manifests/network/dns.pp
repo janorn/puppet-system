@@ -1,3 +1,4 @@
+#  domainname:  'domain.com'
 class system::network::dns (
   $config = undef,
 ) {
@@ -9,8 +10,10 @@ class system::network::dns (
     $_config = hiera_hash('system::network::dns', undef)
   }
   if $_config {
+    $domain      = $_config['domainname']
     $domains     = $_config['domains']
     $nameservers = $_config['nameservers']
+    validate_string($domain)
     validate_array($domains)
     validate_array($nameservers)
     file { '/etc/resolv.conf':
