@@ -18,15 +18,17 @@ class system::network::interfaces (
   }
   $defaults = {
   }
-  case $::osfamily {
-    'RedHat': {
-      create_resources('system::network::rhel_interface', $_config, $defaults)
-    }
-    'Solaris': {
-      create_resources('system::network::sun_interface', $_config, $defaults)
-    }
-    default: {
-      fail('This network module only supports RedHat & Solaris based systems.')
+  if $_config {
+    case $::osfamily {
+      'RedHat': {
+        create_resources('system::network::rhel_interface', $_config, $defaults)
+      }
+      'Solaris': {
+        create_resources('system::network::sun_interface', $_config, $defaults)
+      }
+      default: {
+        fail('This network module supports RedHat & Solaris based systems.')
+      }
     }
   }
 }
