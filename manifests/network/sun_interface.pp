@@ -18,6 +18,8 @@ define system::network::sun_interface (
   $userctl               = false,
 ) {
   $_interface = $title
+  $_ipcidr = ip_cidrlength($ipaddress)
+  $_defgw = $system::network::gateway
   validate_string($_interface)
   if $dhcp == undef {
     if $ipaddress {
@@ -63,18 +65,29 @@ define system::network::sun_interface (
   $_ipv6addr_secondaries = $ipv6addr_secondaries
   $_ipv6autoconf = $ipv6autoconf
   validate_bool($_ipv6autoconf)
+  # Setup interface
   ip_interface { $_interface:
     ensure => $ensure,
   }
+  # Configure interface
   address_object { "${_interface}/v4":
     ensure       => $ensure,
     address      => $ipaddress,
     address_type => 'static',
     require      => Ip_interface[$_interface],
+    notify       => Exec["add-defaultroute-${_interface}"],
   }
   address_object { "${_interface}/v6":
     ensure       => $ensure,
     address_type => 'addrconf',
     require      => Ip_interface[$_interface],
+  }
+  # Need an if statement to check wether the gateway is in the created subnet.
+  if ip_network($ipaddress) == ip_network("${_defgw}/${_ipcidr}") {
+    exec { "add-defaultroute-${_interface}":
+      command     => "/usr/sbin/route -fp add default -gateway ${_defgw}",
+      refreshonly => true,
+      subscribe   => Address_object["${_interface}/v4"],
+    }
   }
 }
